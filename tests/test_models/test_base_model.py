@@ -19,7 +19,7 @@ class test_basemodel(unittest.TestCase):
 
     def setUp(self):
         """ """
-        pass
+        os.environ['HBNB_TYPE_STORAGE'] = 'file_storage'
 
     def tearDown(self):
         try:
