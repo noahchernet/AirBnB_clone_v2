@@ -119,7 +119,8 @@ def test_funcs():
     """Program starts here
     To see how the functions work, execute this function
     """
-    myStr = '= a=b missing_equal_sign missing_value= =missing_key c="Hollow"_"Knight" integer=1 '\
+    myStr = '= a=b missing_equal_sign missing_value= =missing_key "\
+        "c="Hollow"_"Knight" integer=1 '\
         'float=1.2452 id=0001 name="Beautiful_Sunset" 1="invalid_key"'
     list = myStr.split(' ')
     print(list)
