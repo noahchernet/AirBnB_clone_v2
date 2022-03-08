@@ -104,9 +104,13 @@ def dictFromList(list):
         elif is_float(value):
             dict[key] = float(value)
         else:
-            if (value[0] == '"'):
+            # Skip to next iteration if the value is a single quote only
+            if value[0] == '"' or value[0] == "'" and len(value[1]) == 1:
+                continue
+            # Truncate the quotes at the end
+            if (value[0] == '"' or value[0] == "'"):
                 value = value[1:]
-            if (value[-1] == '"'):
+            if (value[-1] == '"' or value[-1] == "'"):
                 value = value[:-1]
             value = value.replace('"', '\"')
             value = value.replace('_', ' ')
@@ -120,7 +124,7 @@ def test_funcs():
     To see how the functions work, execute this function
     """
     myStr = '= a=b missing_equal_sign missing_value= =missing_key c="Hollow"_"Knight" integer=1 '\
-        'float=1.2452 id=0001 name="Beautiful_Sunset" 1="invalid_key"'
+        'float=1.2452 id=0001 name="Beautiful_Sunset" 1="invalid_key" line=key'
     list = myStr.split(' ')
     print(list)
     # Only valid entries are added to the dict from the list
