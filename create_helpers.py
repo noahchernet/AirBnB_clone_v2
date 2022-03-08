@@ -71,7 +71,8 @@ def dictFromList(list):
     """Forms a dictionary from a list of strings.
     Each string is iterated and the key is taken as the string before the equal
     sign and the value is taken as the string after the equal sign. If there's
-    no equal sign or the key or value is invalid, it is not added to the dictionary.
+    no equal sign or the key or value is invalid, it is not added to
+    the dictionary.
 
     Args:
         list (list): List of strings that have keys and values separated
@@ -118,7 +119,8 @@ def test_funcs():
     """Program starts here
     To see how the functions work, execute this function
     """
-    myStr = '= a=b missing_equal_sign missing_value= =missing_key c="Hollow"_"Knight" integer=1 float=1.2452 id=0001 name="Beautiful_Sunset" 1="invalid_key"'
+    myStr = '= a=b missing_equal_sign missing_value= =missing_key c="Hollow"_"Knight" integer=1 '\
+        'float=1.2452 id=0001 name="Beautiful_Sunset" 1="invalid_key"'
     list = myStr.split(' ')
     print(list)
     # Only valid entries are added to the dict from the list
