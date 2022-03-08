@@ -14,6 +14,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
         else:
             # Add an id if there's no id included in kwargs
             if 'id' not in kwargs.keys():
@@ -34,7 +35,10 @@ class BaseModel:
             if '__class__' in kwargs.keys():
                 del kwargs['__class__']
             self.__dict__.update(kwargs)
-        storage.new(self)
+
+            # Object is added if it doesn't exist in the storage
+            if self.id not in [i.id for i in storage.all().values()]:
+                storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the instance"""
