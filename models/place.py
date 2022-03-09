@@ -1,10 +1,20 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+import models
+from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from sqlalchemy import (
-    Column, String, ForeignKey, Integer, Float)
+    Column, String, ForeignKey, Integer, Float, Table)
 import os
 from sqlalchemy.orm import relationship
+
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -25,9 +35,30 @@ class Place(BaseModel, Base):
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship(
             "Review", backref="place", cascade="all, delete")
+        amenities = relationship('Amenity', backref='place_amenities',
+                                 secondary='place_amenity',
+                                 viewonly=False)
     else:
         @property
         def reviews(self):
             from models import storage
             return [i for i in storage.all() if i.value().__class__ == 'Review'
                     and i.value().place_id == self.id]
+
+        @property
+        def amenities(self):
+            """ getter returns list of amenities """
+            list_of_amenities = []
+            all_amenities = models.storage.all(Amenity)
+            for key, obj in all_amenities.items():
+                if key in self.amentiy_ids:
+                    list_of_amenities.append(obj)
+            return list_of_amenities
+
+        @amenities.setter
+        def amenities(self, obj=None):
+            """Set amenity_ids
+            """
+            if type(obj).__name__ == 'Amenity':
+                new_amenity = 'Amenity' + '.' + obj.id
+                self.amenity_ids.append(new_amenity)

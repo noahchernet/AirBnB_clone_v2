@@ -12,6 +12,6 @@ classes = {
     'User': User,
     'State': State, 'City': City,
     'Place': Place,
-    #  'Amenity': Amenity,
+    'Amenity': Amenity,
     'Review': Review
 }
