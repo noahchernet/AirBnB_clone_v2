@@ -53,6 +53,7 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
+        """deletes object from database"""
         self.__session.delete(obj)
 
     def reload(self):

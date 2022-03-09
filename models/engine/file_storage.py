@@ -17,6 +17,7 @@ class FileStorage:
         return objs
 
     def __key(self, obj):
+        """returns a key for given obj"""
         return obj.__class__.__name__ + '.' + obj.id
 
     def new(self, obj):
@@ -46,6 +47,8 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        """deletes obj from storage if @ obj is not
+        specified does nothing"""
         if obj is not None:
             for o in FileStorage.__objects.values():
                 if o is obj:

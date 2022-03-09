@@ -72,4 +72,5 @@ class BaseModel:
         return dictionary
 
     def delete(self):
+        """deletes itself from storage"""
         storage.delete(self)
