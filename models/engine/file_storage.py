@@ -10,16 +10,14 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        objs = {}
-        if cls is None:
-            return FileStorage.__objects
-        for k, v in FileStorage.__objects.items():
-            if v.__class__ is cls:
-                objs[k] = v
+        objs = FileStorage.__objects
+        if cls is not None:
+            objs = {k: v for k, v in FileStorage.__objects.items()
+                    if v.__class__ is cls}
         return objs
 
     def __key(self, obj):
-        return obj.to_dict()['__class__'] + '.' + obj.id
+        return obj.__class__.__name__ + '.' + obj.id
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -37,19 +35,7 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
-        classes = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-        }
+        from .classes import classes
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
