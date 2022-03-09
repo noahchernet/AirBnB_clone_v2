@@ -15,6 +15,7 @@ class State(BaseModel, Base):
         cities = relationship(
             "City", backref="state", cascade="all, delete")
     else:
+        @property
         def cities(self):
             """Used when FileStorage is used instead of DBStorage"""
             from models import storage

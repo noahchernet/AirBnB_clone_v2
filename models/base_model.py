@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import declarative_base
+import os
 
 from models import storage
 
@@ -46,8 +47,10 @@ class BaseModel:
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, self
-                                     .to_dict(date_to_str=False))
+        return '[{}] ({}) {}'.format(
+            cls, self.id,
+            self.to_dict() if os.getenv('HBNB_TYPE_STORAGE') == 'file'
+            else self.to_dict(date_to_str=False))
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""

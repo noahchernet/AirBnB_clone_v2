@@ -6,8 +6,9 @@ from models.amenity import Amenity
 from models.review import Review
 
 classes = {
-    'User': User, 'Place': Place,
-    'State': State, 'City': City,
+    'User': User,
+    'State': State, 'City': City
+    # 'Place': Place,
     #  'Amenity': Amenity,
     # 'Review': Review
 }
