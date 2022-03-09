@@ -7,11 +7,13 @@ import os
 from unittest import TestCase
 
 
-class test_fileStorage(unittest.TestCase):
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'if using database skip this')
+class test_fileStorage(TestCase):
     """ Class to test the file storage method """
 
     def setUp(self):
         """ Set up test environment """
+        os.putenv('HBNB_MYSQL_TYPE', 'file')
         del_list = []
         for key in storage._FileStorage__objects.keys():
             del_list.append(key)
