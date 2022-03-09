@@ -82,15 +82,13 @@ def dictFromList(list):
     """
     dict = {}
     for i in list:
-        equal_signs_in_str = findOccurrences(i, '=')
+        param = i.split('=')
 
         # Go to the next iteration if there's no equal sign in this string
-        if (len(equal_signs_in_str) == 0):
+        if (len(param) == 0):
             continue
 
-        j = equal_signs_in_str[0]  # Equal sign's index in the string
-        key = i[:j]
-        value = i[j + 1:]
+        key, value = param
 
         # If the key or value doesn't exist, don't add it to the dictionary
         if len(key) == 0 or len(value) == 0:

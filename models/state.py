@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
 
@@ -9,20 +9,14 @@ import os
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
-    name = None
-    cities = None
+    name = Column(String(128), nullable=False)
 
-    def __init__(self, **kwargs):
-        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-            self.name = Column(String(128), nullable=False)
-            self.cities = relationship(
-                "City", backref="state", cascade="all, delete")
-        else:
-            self.name = ""
-        super().__init__(**kwargs)
-
-    def cities(self):
-        """Used when FileStorage is used instead of DBStorage"""
-        from models import storage
-        return [i for i in storage.all() if i.value().__class__ == 'City' and
-                i.value().state_id == self.state_id]
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        cities = relationship(
+            "City", backref="state", cascade="all, delete")
+    else:
+        def cities(self):
+            """Used when FileStorage is used instead of DBStorage"""
+            from models import storage
+            return [i for i in storage.all() if i.value().__class__ == 'City'
+                    and i.value().state_id == self.state_id]
