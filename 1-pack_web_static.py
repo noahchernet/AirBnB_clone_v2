@@ -10,10 +10,13 @@ import os
 def do_pack():
     '''Compresses directory web_static into .tgz format'''
     t = datetime.now()
-    file_name = "web_static_" + str(t.year) + str(t.month) + str(t.day) + str(t.hour) + str(t.minute) + str(t.second) + '.tgz'
+    file_name = "web_static_" + str(t.year) + str(t.month) + str(t.day) +\
+        str(t.hour) + str(t.minute) + str(t.second) + '.tgz'
     local('mkdir -p versions')
     local('tar -cvzf versions/{} web_static'.format(file_name))
     try:
-        print('web_static packed: versions/' + file_name, "->", str(os.path.getsize(os.getcwd() + '/versions/' + file_name)) + "Bytes")
+        print('web_static packed: versions/' + file_name, "->",
+              str(os.path.getsize(os.getcwd() + '/versions/'
+                  + file_name)) + "Bytes")
     except Exception:
         print('None')
