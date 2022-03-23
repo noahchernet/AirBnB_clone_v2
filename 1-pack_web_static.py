@@ -19,4 +19,5 @@ def do_pack():
               str(os.path.getsize(os.getcwd() + '/versions/'
                   + file_name)) + "Bytes")
     except Exception:
-        print('None')
+        return None
+    return 'versions/' + file_name
