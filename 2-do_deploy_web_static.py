@@ -33,4 +33,5 @@ def do_deploy(archive_path):
 
     # Remove the symbolic link if it exists
     run('sudo rm -f -- /data/web_static/current')
-    run('sudo ln -sf /data/web_static/releases /data/web_static/current')
+    run('sudo ln -sf /data/web_static/releases/'
+        + archive_path[9:-4] + ' /data/web_static/current')
