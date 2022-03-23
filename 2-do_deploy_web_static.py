@@ -4,17 +4,24 @@ Distributes an archive to your web servers, using do_deploy()
 '''
 from fabric.api import *
 import os
+from fabric.api import settings
 
 env.hosts = ['18.232.153.3', '34.236.33.185']
+
+
+class FabricException(Exception):
+    '''Fake wrapper class to handle Fabric run() aborts as Python exceptions'''
+    pass
 
 
 def do_deploy(archive_path):
     '''Calls do_deploy_run and returns either True or
     False if an exception is raised'''
-    try:
-        do_deploy_run(archive_path)
-    except Exception:
-        return False
+    with settings(abort_exception=FabricException):
+        try:
+            do_deploy_run(archive_path)
+        except Exception:
+            return False
     return True
 
 
