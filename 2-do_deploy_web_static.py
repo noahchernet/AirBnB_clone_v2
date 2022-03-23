@@ -42,3 +42,4 @@ def do_deploy_run(archive_path):
     run('sudo rm -f -- /data/web_static/current')
     run('sudo ln -sf /data/web_static/releases/'
         + archive_path[9:-4] + ' /data/web_static/current')
+    return True
