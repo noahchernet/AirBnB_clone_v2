@@ -4,19 +4,33 @@ Distributes an archive to your web servers, using do_deploy()
 '''
 from fabric.api import *
 import os
+from fabric.api import settings
 
 env.hosts = ['18.232.153.3', '34.236.33.185']
 
 
+class FabricException(Exception):
+    '''Fake wrapper class to handle Fabric run() aborts as Python exceptions'''
+    pass
+
+
 def do_deploy(archive_path):
+    '''Calls do_deploy_run and returns either True or
+    False if an exception is raised'''
+    with settings(abort_exception=FabricException):
+        try:
+            do_deploy_run(archive_path)
+        except Exception:
+            return False
+    return True
+
+
+def do_deploy_run(archive_path):
     '''Deploys archive to remote servers'''
 
     file_path = os.getcwd() + '/' + archive_path
     # Return false if the archive doesn't exist
-    try:
-        os.path.getsize(os.getcwd() + '/' + archive_path)
-    except Exception:
-        return False
+    os.path.getsize(os.getcwd() + '/' + archive_path)
 
     # Upload the archive to remote servers
     put(file_path, "/tmp/")
@@ -35,3 +49,4 @@ def do_deploy(archive_path):
     run('sudo rm -f -- /data/web_static/current')
     run('sudo ln -sf /data/web_static/releases/'
         + archive_path[9:-4] + ' /data/web_static/current')
+    return True
