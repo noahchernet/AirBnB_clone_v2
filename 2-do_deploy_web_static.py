@@ -20,15 +20,16 @@ def do_deploy(archive_path):
 
 def do_deploy_run(archive_path):
     '''Deploys archive to remote servers'''
-    file_path = os.getcwd() + '/' + archive_path
+    # Archive's name without the .tgz extension
     archive_name = archive_path[9:-4]
 
+    # print("Archive path:", os.getcwd() + '/' + archive_path)
     # Return false if the archive doesn't exist
-    if not os.path.isfile(file_path):
+    if not os.path.isfile(os.getcwd() + '/' + archive_path):
         return False
 
     # Upload the archive to remote servers
-    put(file_path, "/tmp/")
+    put(archive_path, "/tmp/")
     # If a folder with the same archive name exists, remvoe it
     run('sudo rm -rf -- /data/web_static/releases/' + archive_name)
 
@@ -36,7 +37,7 @@ def do_deploy_run(archive_path):
 
     # Extract the archive's contents to
     # /data/web_static/releases/<archive_name>
-    run('sudo tar zxvf /tmp/' + archive_path[9:] +
+    run('sudo tar -xzf /tmp/' + archive_path[9:] +
         ' -C /data/web_static/releases/' + archive_name)
     # Move the contents of the extracted archive to its parent folder
     run('sudo mv -f /data/web_static/releases/'
