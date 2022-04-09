@@ -20,7 +20,7 @@ def route_hbnb():
     return "HBNB"
 
 
-@app.route('/c/<text>')
+@app.route('/c/<text>', strict_slashes=False)
 def c_text_print(text):
     '''Prints the text passed in the route'''
     return "C {}\n".format(text.replace('_', ' '))
