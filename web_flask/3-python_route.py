@@ -25,7 +25,7 @@ def route_hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def c_text_print(text):
     '''Prints the text passed in the route'''
-    return "C {}\n".format(text.replace('_', ' '))
+    return "C {}".format(text.replace('_', ' '))
 
 
 @app.route('/python/', strict_slashes=False)
