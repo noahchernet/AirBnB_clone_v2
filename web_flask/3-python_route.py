@@ -37,7 +37,7 @@ def python_is_cool():
 @app.route('/python/<text>', strict_slashes=False)
 def python_text_print(text):
     '''Prints the text passed in the route'''
-    return "Python is {}".format(text.replace('_', ' '))
+    return "Python {}".format(text.replace('_', ' '))
 
 
 if __name__ == "__main__":
