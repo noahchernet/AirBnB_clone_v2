@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Module 4-number_route
+'''Module 4-number_template
 A basic Flask app that writes "Hello, HBNB!" to the screen on route /
 and "HBNB" on route /hbnb
 and shows the text passed in the route c/<text>
