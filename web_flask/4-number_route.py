@@ -41,7 +41,7 @@ def python_text_print(text):
     return "Python {}".format(text.replace('_', ' '))
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
+@app.route('/number/<n>', strict_slashes=False)
 def print_int(n):
     '''Prints the integer passed to it, it fails if n is not a n int'''
     return f"{n} is a number"
