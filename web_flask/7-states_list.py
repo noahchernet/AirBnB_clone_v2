@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-"""Start web application with two routings
 """
-
+Module 7-states_list
+Start web application with two routings
+"""
 from models import storage
 from models.state import State
 from flask import Flask, render_template
+
 app = Flask(__name__)
 
 
@@ -22,6 +24,7 @@ def states_list():
 @app.teardown_appcontext
 def app_teardown(arg=None):
     """Clean-up session
+    Disconnect from the database
     """
     storage.close()
 
