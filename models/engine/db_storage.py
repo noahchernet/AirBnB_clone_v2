@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This module defines a class to manage database storage for hbnb clone"""
+import MySQLdb
 from sqlalchemy import MetaData
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -14,6 +15,14 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        conn = MySQLdb.connect(host="localhost", port=3306,
+                               user="hbnb_dev", passwd="hbnb_dev_pwd", charset="utf8")
+        cur = conn.cursor()
+        cur.execute("CREATE DATABASE IF NOT EXISTS hbnb_dev_db")
+        conn.commit()
+        cur.close()
+        conn.close()
+
         self.__engine = create_engine('mysql+mysqldb://'
                                       '{}:{}@{}:3306/{}'.format(
                                           getenv('HBNB_MYSQL_USER'), getenv(
