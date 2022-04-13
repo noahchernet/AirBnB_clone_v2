@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 '''
 Module 7-states_list
-Starts a Flask web application
+Starts a Flask web application on 0.0.0.0:5000
 The route /states_list gets all states in storage and prints them
+When the application is terminated, the session connecting to the database is closed
 '''
 from models import storage
 from models.state import State
@@ -14,7 +15,8 @@ app = Flask(__name__)
 @app.route('/states_list', strict_slashes=False)
 def states_list():
     '''Render template with states
-    Gets all the states and prints their ids and names
+    Gets all the states and prints their ids and names,
+    by fetching from the database using storage. 
     '''
     path = '7-states_list.html'
     states = storage.all(State)
@@ -27,6 +29,7 @@ def states_list():
 def app_teardown(arg=None):
     '''Clean-up session
     Reloads the session to refresh the objects in the session, from the database
+    by calling the close method of storage.
     '''
     storage.close()
 
