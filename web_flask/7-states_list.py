@@ -11,7 +11,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/states_list')
+@app.route('/states_list', strict_slashes=False)
 def states_list():
     '''Render template with states
     Gets all the states and prints their ids and names
@@ -32,5 +32,4 @@ def app_teardown(arg=None):
 
 
 if __name__ == '__main__':
-    app.url_map.strict_slashes = False
     app.run(host='0.0.0.0', port=5000)
