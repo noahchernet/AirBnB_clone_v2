@@ -19,5 +19,6 @@ class State(BaseModel, Base):
         def cities(self):
             """Used when FileStorage is used instead of DBStorage"""
             from models import storage
-            return [i for i in storage.all() if i.value().__class__ == 'City'
-                    and i.value().state_id == self.state_id]
+            all_objs = storage.all()
+            return [i for i in all_objs if all_objs[i].__class__ == 'City'
+                    and all_objs[i].state_id == self.state_id]
